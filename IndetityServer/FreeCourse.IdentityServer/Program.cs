@@ -57,7 +57,7 @@ namespace FreeCourse.IdentityServer
                             Email = "deneme@gmail.com",
                             City = "İstanbul"
 
-                        },"Password1234@").Wait();
+                        }, "Password1234@").Wait();
                     }
                 }
 
