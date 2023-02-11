@@ -4,6 +4,7 @@
 
 using IdentityServer4;
 using IdentityServer4.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,10 +20,14 @@ namespace FreeCourse.IdentityServer
         new ApiResource(IdentityServerConstants.LocalApi.ScopeName)
         };
         
+        //kullanıcının erişebiliecegimiz verilerini düzenleme 
         public static IEnumerable<IdentityResource> IdentityResources =>
                    new IdentityResource[]
                    {
-
+                       new IdentityResources.Email(),
+                       new IdentityResources.OpenId(),
+                       new IdentityResources.Profile(),
+                       new IdentityResource(){Name="roles",DisplayName="Roles",Description="Kullanıcı rolleri",UserClaims=new[]{"role"}}
                    };
 
         public static IEnumerable<ApiScope> ApiScopes =>
@@ -36,14 +41,33 @@ namespace FreeCourse.IdentityServer
         public static IEnumerable<Client> Clients =>
             new Client[]
             {
+                //bunda refresh token yok credintials kısmında o yuzden ayrı ayrı tanımlanır.
                 new Client
                 {
                     ClientId="WebMvcClient",
                     ClientName="Core MVC",
                     ClientSecrets={new Secret("secret".Sha256())},
                     AllowedGrantTypes=GrantTypes.ClientCredentials,
-                    AllowedScopes={ "catalog_fullpermission", "photo_stock_fullpermission",IdentityServerConstants.LocalApi.ScopeName}
+                    AllowedScopes={ "catalog_fullpermission", "photo_stock_fullpermission",IdentityServerConstants.LocalApi.ScopeName},
+                },
+                new Client
+                {
+                    ClientId="WebMvcClientForUser",
+                    ClientName="WebMvcClient",
+                    AllowedScopes={ IdentityServerConstants.StandardScopes.Email,
+                        IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile,IdentityServerConstants.StandardScopes.OfflineAccess//kullanıcı offline olsa bile refresh token alınabilir.
+                        ,IdentityServerConstants.LocalApi.ScopeName,
+                        "catalog_fullpermission"
+                    ,"roles"},
+                    AllowOfflineAccess=true,
+                    ClientSecrets={new Secret("secret".Sha256()) },
+                    AllowedGrantTypes=GrantTypes.ResourceOwnerPassword,
+                    AccessTokenLifetime=1*60*60,
+                    RefreshTokenExpiration=TokenExpiration.Absolute,
+                    AbsoluteRefreshTokenLifetime=(int)(DateTime.Now.AddDays(60)-DateTime.Now).TotalSeconds,
+                    RefreshTokenUsage=TokenUsage.ReUse
                 }
+
             };
     }
 }

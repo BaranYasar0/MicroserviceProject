@@ -1,5 +1,9 @@
 Services
 	-catalogApý=>5011
+    -PhotoStock.API=>5012
+
+Identity
+    -identity.API=>5001
 
 
 	portainer Þifre:password1234
