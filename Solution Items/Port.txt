@@ -1,6 +1,7 @@
 Services
 	-catalogApý=>5011
     -PhotoStock.API=>5012
+	-basket.API=>5013
 
 Identity
     -identity.API=>5001

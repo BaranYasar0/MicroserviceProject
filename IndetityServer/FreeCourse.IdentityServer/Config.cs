@@ -57,7 +57,8 @@ namespace FreeCourse.IdentityServer
                     AllowedScopes={ IdentityServerConstants.StandardScopes.Email,
                         IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile,IdentityServerConstants.StandardScopes.OfflineAccess//kullanıcı offline olsa bile refresh token alınabilir.
                         ,IdentityServerConstants.LocalApi.ScopeName,
-                        "catalog_fullpermission"
+                        "catalog_fullpermission",
+                        "photo_stock_fullpermission"
                     ,"roles"},
                     AllowOfflineAccess=true,
                     ClientSecrets={new Secret("secret".Sha256()) },
