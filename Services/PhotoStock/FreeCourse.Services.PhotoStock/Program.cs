@@ -12,7 +12,7 @@ builder.Services.AddControllers(x =>
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(x =>
 {
     x.Authority = builder.Configuration["IdentityServerURL"];
-    x.Audience = "photo_stock_catalog";
+    x.Audience = "resource_photo_stock";
     x.RequireHttpsMetadata = false;
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
