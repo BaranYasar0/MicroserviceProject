@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using FreeCourse.Shared.Dtos;
+using Microsoft.Data.SqlClient;
 using Npgsql;
 using System.Data;
 
@@ -8,15 +9,12 @@ namespace FreeCourse.Services.Discount.Services
     public class DiscountService : IDiscountService
     {
         private readonly IConfiguration _configuration;
-        private readonly IDiscountService _discountService;
         private readonly IDbConnection _dbConnection;
 
-        public DiscountService(IDiscountService discountService, IConfiguration configuration)
+        public DiscountService(IConfiguration configuration)
         {
-            _discountService = discountService;
             _configuration = configuration;
-
-            _dbConnection = new NpgsqlConnection(_configuration.GetConnectionString("PostgreSql"));
+            _dbConnection =new NpgsqlConnection(_configuration.GetConnectionString("PostgreSql"));
         }
 
         public async Task<Response<List<Models.Discount>>> GetAll()
