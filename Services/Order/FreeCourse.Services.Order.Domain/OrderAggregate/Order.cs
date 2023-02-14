@@ -19,6 +19,11 @@ namespace FreeCourse.Services.Order.Domain.OrderAggregate
         //IReadonlycollection list readonlye benzer ve dısarıya sadece okuma uzerine yayınlanır.
         public IReadOnlyCollection<OrderItem> OrderItems => _orderItems;
 
+        public Order()
+        {
+
+        }
+        
         public Order(Address address, string buyerId)
         {
             _orderItems = new List<OrderItem>();

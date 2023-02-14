@@ -7,17 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.13" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.13">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FreeCourse.Services.Order.Application\FreeCourse.Services.Order.Application.csproj" />
+    <ProjectReference Include="..\..\..\Shared\FreeCourse.Shared\FreeCourse.Shared.csproj" />
   </ItemGroup>
 
 </Project>

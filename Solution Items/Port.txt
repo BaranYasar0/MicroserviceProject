@@ -4,6 +4,7 @@ Services
 	-basket.API=>5013
 	-discount.API=>5014
 	-order.API=>5015
+	-fakePayment.API=>5016
 
 Identity
     -identity.API=>5001
