@@ -21,6 +21,7 @@ namespace FreeCourse.IdentityServer
             new ApiResource("resource_discount"){Scopes={ "discount_fullpermission", "discount_read_permission", "discount_write_permission" } },
             new ApiResource("resource_order"){Scopes={ "order_fullpermission" } },
             new ApiResource("resource_payment"){Scopes={ "payment_fullpermission" } },
+            new ApiResource("resource_gateway"){Scopes={ "gateway_fullpermission" } },
         new ApiResource(IdentityServerConstants.LocalApi.ScopeName)
         };
         
@@ -45,6 +46,7 @@ namespace FreeCourse.IdentityServer
                 new ApiScope("discount_write_permission","Discount için write erişim"),
                 new ApiScope("order_fullpermission","Order için write erişim"),
                 new ApiScope("payment_fullpermission","Payment için write erişim"),
+                new ApiScope("gateway_fullpermission","Gateway için write erişim"),
                 new ApiScope(IdentityServerConstants.LocalApi.ScopeName)
             };
 
@@ -58,7 +60,7 @@ namespace FreeCourse.IdentityServer
                     ClientName="Core MVC",
                     ClientSecrets={new Secret("secret".Sha256())},
                     AllowedGrantTypes=GrantTypes.ClientCredentials,
-                    AllowedScopes={ "catalog_fullpermission", "photo_stock_fullpermission",IdentityServerConstants.LocalApi.ScopeName},
+                    AllowedScopes={ "gateway_fullpermission", "catalog_fullpermission", "photo_stock_fullpermission",IdentityServerConstants.LocalApi.ScopeName},
                 },
                 new Client
                 {
@@ -73,7 +75,8 @@ namespace FreeCourse.IdentityServer
                         "discount_fullpermission",
                         "discount_write_permission",
                         "order_fullpermission",
-                        "payment_fullpermission"
+                        "payment_fullpermission",
+                        "gateway_fullpermission"
                     ,"roles"},
                     AllowOfflineAccess=true,
                     ClientSecrets={new Secret("secret".Sha256()) },

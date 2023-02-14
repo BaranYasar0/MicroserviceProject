@@ -8,6 +8,10 @@ Services
 
 Identity
     -identity.API=>5001
+Gateway
+    -gateway.API=>5000
+
 
 
 	portainer Þifre:password1234
+	docker þfire:123
