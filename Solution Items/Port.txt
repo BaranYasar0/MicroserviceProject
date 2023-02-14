@@ -10,7 +10,8 @@ Identity
     -identity.API=>5001
 Gateway
     -gateway.API=>5000
-
+Web
+    -MVC.API=>5010
 
 
 	portainer Þifre:password1234
