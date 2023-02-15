@@ -64,28 +64,17 @@ namespace FreeCourse.IdentityServer
                 },
                 new Client
                 {
+                   ClientName="Asp.Net Core MVC",
                     ClientId="WebMvcClientForUser",
-                    ClientName="WebMvcClient",
-                    AllowedScopes={ IdentityServerConstants.StandardScopes.Email,
-                        IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile,IdentityServerConstants.StandardScopes.OfflineAccess//kullanıcı offline olsa bile refresh token alınabilir.
-                        ,IdentityServerConstants.LocalApi.ScopeName,
-                        "catalog_fullpermission",
-                        "photo_stock_fullpermission",
-                        "basket_fullpermission",
-                        "discount_fullpermission",
-                        "discount_write_permission",
-                        "order_fullpermission",
-                        "payment_fullpermission",
-                        "gateway_fullpermission"
-                    ,"roles"},
                     AllowOfflineAccess=true,
-                    ClientSecrets={new Secret("secret".Sha256()) },
-                    AllowedGrantTypes=GrantTypes.ResourceOwnerPassword,
+                    ClientSecrets= {new Secret("secret".Sha256())},
+                    AllowedGrantTypes= GrantTypes.ResourceOwnerPassword,
+                    AllowedScopes={ "basket_fullpermission", "order_fullpermission", "gateway_fullpermission", IdentityServerConstants.StandardScopes.Email, IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile, IdentityServerConstants.StandardScopes.OfflineAccess, IdentityServerConstants.LocalApi.ScopeName,"roles" },
                     AccessTokenLifetime=1*60*60,
                     RefreshTokenExpiration=TokenExpiration.Absolute,
-                    AbsoluteRefreshTokenLifetime=(int)(DateTime.Now.AddDays(60)-DateTime.Now).TotalSeconds,
-                    RefreshTokenUsage=TokenUsage.ReUse
-                }
+                    AbsoluteRefreshTokenLifetime= (int) (DateTime.Now.AddDays(60)- DateTime.Now).TotalSeconds,
+                    RefreshTokenUsage= TokenUsage.ReUse
+                },
 
             };
     }
