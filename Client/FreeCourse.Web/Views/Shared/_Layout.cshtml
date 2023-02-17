@@ -29,8 +29,8 @@
 
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item dropdown">
+                        <ul  class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li style="margin-right:500px;" class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     @User.Identity.Name
                                 </a>
@@ -44,7 +44,7 @@
                     }
                     else
                     {
-                        <a class="nav-link" asp-area="" asp-controller="Auth" asp-action="SignIn">Giriş Yap</a>
+                        <a style="margin-right:500px;" class="nav-link" asp-area="" asp-controller="Auth" asp-action="SignIn">Giriş Yap</a>
                     }
 
                 </div>
