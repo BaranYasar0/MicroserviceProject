@@ -34,8 +34,8 @@ namespace FreeCourse.Web.Services
         {
             var response = await _httpClient.GetAsync("categories");
 
-            //if (!response.IsSuccessStatusCode)
-            //    return null;
+            if (!response.IsSuccessStatusCode)
+                return null;
 
             var responseSuccess = await response.Content.ReadFromJsonAsync<Response<List<CategoryViewModel>>>();
 
@@ -45,7 +45,7 @@ namespace FreeCourse.Web.Services
         public async Task<List<CourseViewModel>> GetAllCourseByUserIdAsync(string userId)
         {
             //controller/getallbyuserId/{userId}
-            var response = await _httpClient.GetAsync($"courses/GetAllByUserId/{userId}");
+            var response = await _httpClient.GetAsync($"courses/api/courses/GetAllByUserId/{userId}");
 
             if (!response.IsSuccessStatusCode)
                 return null;

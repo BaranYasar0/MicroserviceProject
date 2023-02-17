@@ -1,8 +1,9 @@
 ﻿@using FreeCourse.Web.Models.ViewModels.Catalog
+
 @{
     ViewData["Title"] = "Index";
 }
-@model List<CategoryViewModel>
+@model List<CourseViewModel>
 
 <div class="row">
     <div class="col-md-12">
@@ -11,13 +12,13 @@
             <div class="card-body">
                 <h5 class="card-title">Kurslar</h5>
 
-                @*<a asp-controller="Courses" asp-action="Create" class="btn btn-primary mb-3">Kurs oluştur</a>*@
+                <a asp-controller="Courses" asp-action="Create" class="btn btn-primary mb-3">Kurs oluştur</a>
                 @if (Model.Any())
                 {
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th>Resim</th>
+                                @*<th>Resim</th>*@
                                 <th>Kurs isim</th>
                                 <th>Fiyat</th>
                                 <th>Süre</th>
@@ -31,13 +32,14 @@
                                 <tr>
                                    @* <td><img style="width:72px;" src="@item.StockPictureUrl" class="img-thumbnail" /></td>*@
                                     <td>@item.Name</td>
-                                    <td>sdasda</td>
-                                    @*<td>@item.Feature.Duration</td>*@
-                                    @*<td>
+                                    <td>@item.Price</td>
+                                    <td>@item.Feature.Duration</td>
+                                    <td>@item.Category.Name</td>
+                                    <td>
                                         <a asp-controller="Courses" asp-action="Update" asp-route-id="@item.Id" class="btn btn-success btn-sm">Güncelle</a>
 
                                         <a asp-controller="Courses" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Sil</a>
-                                    </td>*@
+                                    </td>
                                 </tr>
                             }
                         </tbody>

@@ -12,7 +12,7 @@ namespace FreeCourse.Services.Catalog.Dtos
 
         public decimal Price { get; set; }
         public string UserId { get; set; }
-        public string Picture { get; set; }
+        public string? Picture { get; set; }
 
         public DateTime CreatedTime { get; set; }
         public FeatureDto Feature { get; set; }

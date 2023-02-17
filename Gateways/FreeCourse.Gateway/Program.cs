@@ -12,7 +12,7 @@ builder.Host.ConfigureAppConfiguration((hostingContext, config) =>
 builder.Services.AddAuthentication().AddJwtBearer("GatewayAuthenticationScheme", x =>
 {
     x.Authority = builder.Configuration["IdentityServerURL"];
-    x.Authority = "resource_gateway";
+    x.Audience = "resource_gateway";
     x.RequireHttpsMetadata = false;
 });
 

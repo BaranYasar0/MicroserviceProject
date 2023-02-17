@@ -7,13 +7,14 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var serviceApiSettings = builder.Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
+
 // Add services to the container.
 builder.Services.AddHttpContextAccessor();
 
 //ClientCredentialtoken uretirken IdentityModelden gelen IClientAccessTokenCache kullanmak için
 builder.Services.AddAccessTokenManagement();
 
-var serviceApiSettings = builder.Configuration.GetSection("ServiceApiSettings").Get<ServiceApiSettings>();
 
 builder.Services.AddScoped<ResourceOwnerPasswordTokenHandler>();
 builder.Services.AddScoped<ISharedIdentityService, SharedIdentityService>();

@@ -50,16 +50,20 @@ namespace FreeCourse.Services.Catalog.Services
 
         public async Task<Response<List<CourseDto>>> GetAllByUserIdAsync(string userId)
         {
-            var courses = await _courseCollection.Find(x => x.UserId == userId).ToListAsync();
+            var courses = await _courseCollection.Find<Course>(x => x.UserId == userId).ToListAsync();
+
             if (courses.Any())
             {
                 foreach (var course in courses)
                 {
-                    course.Category = await _categoryCollection.Find(x => x.Id == course.Id).FirstOrDefaultAsync();
+                    course.Category = await _categoryCollection.Find<Category>(x => x.Id == course.CategoryId).FirstAsync();
                 }
             }
             else
+            {
                 courses = new List<Course>();
+                //return Response<List<CourseDto>>.Fail("dfdsfsdfs", 204);
+            }
 
             return Response<List<CourseDto>>.Success(_mapper.Map<List<CourseDto>>(courses), 200);
         }

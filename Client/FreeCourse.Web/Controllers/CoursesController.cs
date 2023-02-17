@@ -1,8 +1,10 @@
 ﻿using FreeCourse.Shared.Services;
+using FreeCourse.Web.Models.Inputs.Catalog;
 using FreeCourse.Web.Models.ViewModels.Catalog;
 using FreeCourse.Web.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FreeCourse.Web.Controllers
 {
@@ -20,9 +22,79 @@ namespace FreeCourse.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var data = await _catalogService.GetAllCategoriesAsync();
-            
-            return View(data);
+            return View(await _catalogService.GetAllCourseByUserIdAsync(_sharedIdentityService.GetUserId));
+        }
+
+        public async Task<IActionResult> Create()
+        {
+            var categories = await _catalogService.GetAllCategoriesAsync();
+            ViewBag.categoryList = new SelectList(categories, "Id", "Name");
+            return View();
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CourseCreateInput courseCreateInput)
+        {
+            var categories = await _catalogService.GetAllCategoriesAsync();
+            ViewBag.categoryList = new SelectList(categories, "Id", "Name");
+
+            courseCreateInput.UserId = _sharedIdentityService.GetUserId;
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            await _catalogService.CreateCourseAsync(courseCreateInput);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Update(string id)
+        {
+            var course = await _catalogService.GetByCourseIdAsync(id);
+            var categories = await _catalogService.GetAllCategoriesAsync();
+
+            if (course == null)
+            {
+
+            }
+
+            ViewBag.categoryList = new SelectList(categories, "Id", "Name", course.Id);
+            CourseUpdateInput courseUpdateInput = new()
+            {
+                Id = course.Id,
+                Name = course.Name,
+                Price = course.Price,
+                Feature = course.Feature,
+                CategoryId = course.CategoryId,
+                UserId = course.UserId,
+                Picture = course.Picture,
+                Description = course.Description
+            };
+
+            return View(courseUpdateInput);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(CourseUpdateInput courseUpdateInput)
+        {
+            var categories = await _catalogService.GetAllCategoriesAsync();
+            ViewBag.categoryList = new SelectList(categories, "Id", "Name", courseUpdateInput.Id);
+
+            if (!ModelState.IsValid)
+                return View();
+
+            await _catalogService.UpdateCourseAsync(courseUpdateInput);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Delete(string id)
+        {
+            await _catalogService.DeleteCourseAsync(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
