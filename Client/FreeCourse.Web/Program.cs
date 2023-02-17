@@ -31,6 +31,11 @@ builder.Services.AddHttpClient<ICatalogService, CatalogService>(x =>
 {
     x.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUrl}/{serviceApiSettings.Catalog.Path}");
 }).AddHttpMessageHandler<ClientCredentialTokenHandler>();
+builder.Services.AddHttpClient<IPhotoStockService, PhotoStockService>(x =>
+{
+    x.BaseAddress = new Uri($"{serviceApiSettings.GatewayBaseUrl}/{serviceApiSettings.PhotoStock.Path}");
+}).AddHttpMessageHandler<ClientCredentialTokenHandler>();
+
 builder.Services.AddHttpClient<IClientCredentialTokenService, ClientCredentialTokenService>();
 builder.Services.AddHttpClient<IUserService, UserService>(x =>
 {
