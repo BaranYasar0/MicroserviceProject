@@ -1,6 +1,7 @@
 ﻿using FreeCourse.Services.Discount.Services;
 using FreeCourse.Shared.ControllerBases;
 using FreeCourse.Shared.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +9,7 @@ namespace FreeCourse.Services.Discount.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class DiscountsController : CustomBaseController
     {
         private readonly ISharedIdentityService _sharedIdentityService;

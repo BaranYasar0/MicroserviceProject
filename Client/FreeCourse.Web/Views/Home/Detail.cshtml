@@ -14,14 +14,15 @@
             <div class="card-body">
                 <h5 class="card-title">@Model.Name</h5>
                 <p class="card-text">@Model.Description</p>
+                <div class="badge bg-primary">@Model.Category.Name</div>
             </div>
         </div>
     </div>
     <div class="col-md-3">
         <div class="card-body">
             <h4 class="card-title">Fiyat: @Model.Price TL</h4>
-            <div>
-                <a href="#" class="btn btn-primary btn-block">Sepete Ekle</a>
+            <div class="d-grid">
+                <a class="btn btn-primary" asp-controller="Basket" asp-action="AddBasketItem" asp-route-courseId="@Model.Id" >Sepete Ekle</a>
             </div>
         </div>
     </div>
