@@ -56,7 +56,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreeCourse.Gateway", "Gatew
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{FB672BF2-270D-468B-8571-18E09FB4725E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FreeCourse.Web", "Client\FreeCourse.Web\FreeCourse.Web.csproj", "{A199DEC0-CC2F-426A-A77A-67F3646F98F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FreeCourse.Web", "Client\FreeCourse.Web\FreeCourse.Web.csproj", "{A199DEC0-CC2F-426A-A77A-67F3646F98F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

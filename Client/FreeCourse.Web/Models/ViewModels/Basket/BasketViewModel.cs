@@ -35,7 +35,7 @@
         }
 
 
-        public decimal? TotalPrice
+        public decimal TotalPrice
         {
             get => _basketItems.Sum(x => x.GetCurrentPrice);
         }
