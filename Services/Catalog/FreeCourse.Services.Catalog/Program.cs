@@ -1,6 +1,7 @@
 using FreeCourse.Services.Catalog.Model;
 using FreeCourse.Services.Catalog.Services;
 using FreeCourse.Services.Catalog.Settings;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -11,6 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+
+
+
 builder.Services.AddControllers(config =>
 {
     //butun controllerlara [authorize] yazmak yerine bunu kullanarak hrpsine gelir.
@@ -18,9 +22,22 @@ builder.Services.AddControllers(config =>
 });
 
 
+builder.Services.AddMassTransit(x =>
+{
+    //default port:5672 birdaha belirtmeye gerek yok.
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host(builder.Configuration["RabbitMQUrl"], "/", host =>
+        {
+            //guest default deðerdir.
+            host.Username("guest");
+            host.Password("guest");
+        });
+    });
+});
 
 
-    builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("DatabaseSettings"));

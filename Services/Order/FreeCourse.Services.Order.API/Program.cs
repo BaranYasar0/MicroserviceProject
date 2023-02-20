@@ -14,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMassTransit(x =>
 {
     x.AddConsumer<CreateOrderMessageCommandConsumer>();
-    //x.AddConsumer<CourseNameChangedEventConsumer>();
+    x.AddConsumer<CourseNameChangeEventConsumer>();
     // Default Port : 5672
     x.UsingRabbitMq((context, cfg) =>
     {
@@ -28,10 +28,10 @@ builder.Services.AddMassTransit(x =>
         {
             e.ConfigureConsumer<CreateOrderMessageCommandConsumer>(context);
         });
-        //cfg.ReceiveEndpoint("course-name-changed-event-order-service", e =>
-        //{
-        //    e.ConfigureConsumer<CourseNameChangedEventConsumer>(context);
-        //});
+        cfg.ReceiveEndpoint("course-name-changed-event-order-service", e =>
+        {
+            e.ConfigureConsumer<CourseNameChangeEventConsumer>(context);
+        });
     });
 });
 
