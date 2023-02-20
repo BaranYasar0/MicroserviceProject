@@ -35,8 +35,8 @@ namespace FreeCourse.Web.Services
             };
 
             var responsePayment = await _paymentService.ReceivePayment(payment);
-            //if (!responsePayment)
-            //    return new OrderStatusViewModel() { Error = "Ödeme alınmadı", IsSuccesful = false };
+            if (!responsePayment)
+                return new OrderStatusViewModel() { Error = "Ödeme alınmadı", IsSuccesful = false };
 
             var orderCreateInput = new OrderCreateInput()
             {
@@ -67,9 +67,38 @@ namespace FreeCourse.Web.Services
             return response.Data;
         }
 
-        public Task SuspendOrder(CheckOutInfoInput checkOutInfoInput)
+        public async Task<OrderSuspendViewModel> SuspendOrder(CheckOutInfoInput checkOutInfoInput)
         {
-            throw new NotImplementedException();
+            var basket = await _basketService.Get();
+
+            var orderCreateInput = new OrderCreateInput()
+            {
+                BuyerId = _sharedIdentityService.GetUserId,
+                Address = new AddressCreateInput { District = checkOutInfoInput.District, Line = checkOutInfoInput.Line, ZipCode = checkOutInfoInput.ZipCode, Province = checkOutInfoInput.Province, Street = checkOutInfoInput.Street }
+            };
+
+            basket.BasketItems.ForEach(x =>
+            {
+                OrderItemCreateInput orderItemCreateInput = new() { ProductId = x.CourseId, PictureUrl = "a", ProductName = x.CourseName, Price = x.GetCurrentPrice };
+                orderCreateInput.OrderItems.Add(orderItemCreateInput);
+            });
+
+            var paymentInfoInput = new PaymentInfoInput
+            {
+                CardName = checkOutInfoInput.CardName,
+                CardNumber = checkOutInfoInput.CardNumber,
+                Expiration = checkOutInfoInput.Expiration,
+                CVV = checkOutInfoInput.CVV,
+                TotalPrice = basket.TotalPrice,
+                Order = orderCreateInput
+            };
+
+            var responsePayment = await _paymentService.ReceivePayment(paymentInfoInput);
+            if (!responsePayment)
+                return new OrderSuspendViewModel() { Error = "Ödeme alınmadı", IsSuccessful = false };
+
+            await _basketService.Delete();
+            return new OrderSuspendViewModel() { IsSuccessful= true };
         }
     }
 }

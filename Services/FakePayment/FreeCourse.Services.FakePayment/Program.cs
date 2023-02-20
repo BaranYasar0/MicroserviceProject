@@ -1,3 +1,4 @@
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -16,12 +17,27 @@ builder.Services.AddControllers(x =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(x =>
 {
+    x.Authority = builder.Configuration["IdentityResourceURL"];
     x.Audience = "resource_payment";
     x.RequireHttpsMetadata = false;
-    x.Authority = builder.Configuration["IdentityResourceURL"];
 });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddMassTransit(x =>
+{
+    //default port:5672 birdaha belirtmeye gerek yok.
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host(builder.Configuration["RabbitMQUrl"], "/", host =>
+        {
+            //guest default deðerdir.
+            host.Username("guest");
+            host.Password("guest");
+        });
+    });
+});
+
 
 var app = builder.Build();
 
